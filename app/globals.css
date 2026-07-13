@@ -1,0 +1,55 @@
+:root {
+  --bs-body-font-family: 'Segoe UI', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --ink: #111111;
+  --ink-soft: #333333;
+  --muted: #6b6b6b;
+  --line: #e6e6e6;
+  --brand: #004250;
+  --btn-text: #f9c54b;
+  --admin-brand: #004250;
+  --admin-brand-dark: #02323c;
+  --admin-brand-light: #0a5a6b;
+  --admin-accent: #f9c54b;
+  --admin-accent-soft: rgba(249, 197, 75, 0.15);
+  --admin-btn-bg: #004250;
+  --admin-btn-text: #f9c54b;
+  --admin-btn-hover-bg: #005f72;
+  --admin-bg: #eef2f5;
+  --admin-surface: #ffffff;
+  --admin-border: #dde3e8;
+  --admin-shadow-sm: 0 1px 3px rgba(0, 66, 80, 0.06);
+  --admin-shadow-md: 0 4px 16px rgba(0, 66, 80, 0.08);
+  --admin-shadow-lg: 0 12px 32px rgba(0, 66, 80, 0.12);
+  --admin-radius: 14px;
+  --admin-radius-sm: 10px;
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-base: 0.35s var(--ease-out-expo);
+  --reveal-duration: 0.85s;
+  --brand-light: #0a5a6b;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: #ffffff;
+  font-family: var(--bs-body-font-family);
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
