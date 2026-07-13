@@ -7,14 +7,12 @@ import PageLoading from '@/components/site/PageLoading'
 import { resolveImageUrl } from '@/lib/utils/imageUrl'
 import { mergePageHero } from '@/lib/utils/cmsMerge'
 
-const img = (id, w = 1600) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`
-
 const fallback = {
   hero: {
     title: 'Your Guide to Bhutan',
     subtitle:
       'Everything you need to know before you travel to the Land of the Thunder Dragon — visas, seasons, packing and more.',
-    image: img('photo-1483728642387-6c3bdd6c93e5'),
+    image: '',
   },
   about: {
     title: 'About Bhutan',
@@ -43,10 +41,10 @@ const fallback = {
     title: 'Best Time to Visit',
     subtitle: "Bhutan is beautiful year-round — here's what each season offers",
     items: [
-      { name: 'Spring', months: 'Mar – May', desc: 'Blooming rhododendrons, clear skies and the famous Paro Tshechu. One of the best times to visit.', image: img('photo-1464822759023-fed622ff2c3b', 800) },
-      { name: 'Summer', months: 'Jun – Aug', desc: 'Warm, green and lush with occasional monsoon rain. Fewer crowds and vivid landscapes.', image: img('photo-1540541338287-41700207dee6', 800) },
-      { name: 'Autumn', months: 'Sep – Nov', desc: 'Crisp, clear weather with the best Himalayan views and the major Thimphu & Punakha festivals. Peak season.', image: img('photo-1483728642387-6c3bdd6c93e5', 800) },
-      { name: 'Winter', months: 'Dec – Feb', desc: 'Cold but sunny days, snow on the peaks and black-necked cranes in Phobjikha. Quiet and atmospheric.', image: img('photo-1506905925346-21bda4d32df4', 800) },
+      { name: 'Spring', months: 'Mar – May', desc: 'Blooming rhododendrons, clear skies and the famous Paro Tshechu. One of the best times to visit.', image: '' },
+      { name: 'Summer', months: 'Jun – Aug', desc: 'Warm, green and lush with occasional monsoon rain. Fewer crowds and vivid landscapes.', image: '' },
+      { name: 'Autumn', months: 'Sep – Nov', desc: 'Crisp, clear weather with the best Himalayan views and the major Thimphu & Punakha festivals. Peak season.', image: '' },
+      { name: 'Winter', months: 'Dec – Feb', desc: 'Cold but sunny days, snow on the peaks and black-necked cranes in Phobjikha. Quiet and atmospheric.', image: '' },
     ],
   },
   trekking: {
@@ -103,7 +101,7 @@ function mergeGuide(apiData) {
     hero: {
       title: pick(apiData.hero?.title, fallback.hero.title),
       subtitle: pick(apiData.hero?.subtitle, fallback.hero.subtitle),
-      image: pick(apiData.hero?.image, fallback.hero.image),
+      image: pick(apiData.hero?.image, ''),
     },
     about: {
       title: pick(apiData.about?.title, fallback.about.title),
@@ -123,7 +121,7 @@ function mergeGuide(apiData) {
         name: s.name || fallback.seasons.items[i]?.name,
         months: s.months || fallback.seasons.items[i]?.months,
         desc: s.desc || fallback.seasons.items[i]?.desc,
-        image: s.image || fallback.seasons.items[i]?.image,
+        image: s.image?.trim() || '',
       })),
     },
     trekking: {

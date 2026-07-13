@@ -8,18 +8,16 @@ import { api } from '@/lib/api/client'
 import { resolveImageUrl } from '@/lib/utils/imageUrl'
 import { mergePageHero } from '@/lib/utils/cmsMerge'
 
-const img = (id, w = 800) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`
-
 const fallback = {
   hero: {
     eyebrow: 'Who We Are',
     title: 'About Holiday to Bhutan',
     subtitle: 'A local team crafting authentic, responsible journeys through the Last Himalayan Kingdom.',
-    image: img('photo-1483728642387-6c3bdd6c93e5', 1600),
+    image: '',
   },
   story: {
     title: 'Our Story',
-    image: '/images/aboutus/our%20story.jpg',
+    image: '',
     paragraphs: [
       'Holiday to Bhutan was born from a simple belief — that travel should be meaningful, personal and rooted in respect for the places we visit. Founded by Bhutanese guides who grew up in these valleys, we set out to share the kingdom we love with the world.',
       "For over a decade we have designed tailor-made cultural tours and Himalayan treks for travellers from every corner of the globe. From the cliffs of Tiger's Nest to the remote passes of the Snowman Trek, every journey is guided with care, local knowledge and genuine warmth.",
@@ -63,11 +61,11 @@ const fallback = {
     title: 'Meet the Team',
     subtitle: 'The passionate people behind your journey',
     members: [
-      { name: 'Karma Jigyel', role: 'Founder & CEO', avatar: '/images/aboutus/Founder%20%26%20CEO%20-%20Karma%20Jigyel.jpeg' },
-      { name: 'Phuntsho Choden', role: 'Co-Founder', avatar: '/images/aboutus/Phuntsho%20Choden-%20Co-Founder.jpeg' },
-      { name: 'Karma Selden', role: 'General Manager', avatar: '/images/aboutus/Karma%20Selden-%20GM.jpeg' },
-      { name: 'Samten Dema', role: 'Reservation Officer', avatar: '/images/aboutus/Samten%20Dema-%20Reservation%20Officer.jpeg' },
-      { name: 'Rigzang Lham', role: 'Accountant', avatar: '/images/aboutus/Rigzang%20Lham-Accountant.jpeg' },
+      { name: 'Karma Jigyel', role: 'Founder & CEO', avatar: '' },
+      { name: 'Phuntsho Choden', role: 'Co-Founder', avatar: '' },
+      { name: 'Karma Selden', role: 'General Manager', avatar: '' },
+      { name: 'Samten Dema', role: 'Reservation Officer', avatar: '' },
+      { name: 'Rigzang Lham', role: 'Accountant', avatar: '' },
     ],
   },
   values: {
@@ -101,11 +99,11 @@ const mergePage = (apiData) => {
       eyebrow: pick(apiData.hero?.eyebrow, fallback.hero.eyebrow),
       title: pick(apiData.hero?.title, fallback.hero.title),
       subtitle: pick(apiData.hero?.subtitle, fallback.hero.subtitle),
-      image: pick(apiData.hero?.image, fallback.hero.image),
+      image: apiData.hero?.image?.trim() || '',
     },
     story: {
       title: pick(apiData.story?.title, fallback.story.title),
-      image: pick(apiData.story?.image, fallback.story.image),
+      image: apiData.story?.image?.trim() || '',
       paragraphs: pick(apiData.story?.paragraphs, fallback.story.paragraphs),
     },
     missionVision: {
@@ -131,7 +129,13 @@ const mergePage = (apiData) => {
     team: {
       title: pick(apiData.team?.title, fallback.team.title),
       subtitle: pick(apiData.team?.subtitle, fallback.team.subtitle),
-      members: pick(apiData.team?.members, fallback.team.members),
+      members: (apiData.team?.members || [])
+        .filter((member) => member?.name?.trim())
+        .map((member) => ({
+          name: member.name.trim(),
+          role: member.role?.trim() || '',
+          avatar: member.avatar?.trim() || '',
+        })),
     },
     values: {
       title: pick(apiData.values?.title, fallback.values.title),
@@ -246,7 +250,12 @@ function TeamCarousel({ members }) {
               style={{ flexBasis: `${100 / cardsPerView}%` }}
             >
               <div className="team-card glass h-100">
-                <span className="team-card__avatar" style={{ backgroundImage: `url(${resolveImageUrl(m.avatar)})` }} />
+                <span
+                  className="team-card__avatar"
+                  style={m.avatar ? { backgroundImage: `url(${resolveImageUrl(m.avatar)})` } : undefined}
+                >
+                  {!m.avatar ? (m.name?.charAt(0) || '?') : null}
+                </span>
                 <h5 className="fw-bold mb-1">{m.name}</h5>
                 <p className="text-muted mb-0">{m.role}</p>
               </div>
@@ -289,7 +298,10 @@ function About() {
 
   return (
     <>
-      <section className="about-hero" style={{ backgroundImage: `url(${resolveImageUrl(page.hero.image)})` }}>
+      <section
+        className="about-hero"
+        style={page.hero.image ? { backgroundImage: `url(${resolveImageUrl(page.hero.image)})` } : undefined}
+      >
         <div className="about-hero__scrim" />
         <Container className="about-hero__inner text-center text-white">
           <p className="eyebrow text-white-50 mb-2">{page.hero.eyebrow}</p>
@@ -302,7 +314,9 @@ function About() {
         <Container>
           <Row className="g-5 align-items-center">
             <Col lg={6}>
-              <img className="about-story__img reveal reveal--fade-left" src={resolveImageUrl(page.story.image)} alt={page.story.title} />
+              {page.story.image ? (
+                <img className="about-story__img reveal reveal--fade-left" src={resolveImageUrl(page.story.image)} alt={page.story.title} />
+              ) : null}
             </Col>
             <Col lg={6}>
               <div className="section-title text-start mb-3 reveal reveal--fade-right">

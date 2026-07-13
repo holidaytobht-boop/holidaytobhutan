@@ -15,19 +15,19 @@ const fallback = {
       headline: 'Every Trail Tells a Story',
       subheading:
         'From sacred temples to remote mountain passes, discover the beauty, culture, and spirit of Bhutan.',
-      image: '/images/home/herobanner1.jpg',
+      image: '',
     },
     {
       headline: 'Experience Bhutan Like Never Before',
       subheading:
         'Curated journeys through the Last Himalayan Kingdom, combining adventure, culture, and comfort in one extraordinary experience.',
-      image: '/images/home/herobanner2.jpg',
+      image: '',
     },
     {
       headline: 'Discover Bhutan, One Journey at a Time',
       subheading:
         'Explore breathtaking landscapes, ancient traditions, and unforgettable trekking adventures across the Last Himalayan Kingdom.',
-      image: '/images/home/herobanner3.jpg',
+      image: '',
     },
   ],
 }

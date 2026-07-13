@@ -47,15 +47,13 @@ function validateContactForm(form) {
   return fieldErrors
 }
 
-const img = (id, w = 1600) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`
-
 const fallback = {
   hero: {
     eyebrow: 'Contact',
     title: "Let's Plan Your Bhutan Journey",
     subtitle:
       'Questions, ideas or ready to book? Our local Bhutan specialists are here to help every step of the way.',
-    image: img('photo-1528181304800-259b08848526'),
+    image: '',
     ctaText: 'Send a Message',
     ctaLink: '#contact-form',
   },
@@ -111,7 +109,7 @@ const mergePage = (apiData) => {
       eyebrow: pick(apiData.hero?.eyebrow, fallback.hero.eyebrow),
       title: pick(apiData.hero?.title, fallback.hero.title),
       subtitle: pick(apiData.hero?.subtitle, fallback.hero.subtitle),
-      image: pick(apiData.hero?.image, fallback.hero.image),
+      image: apiData.hero?.image?.trim() || '',
       ctaText: pick(apiData.hero?.ctaText, fallback.hero.ctaText),
       ctaLink: pick(apiData.hero?.ctaLink, fallback.hero.ctaLink),
     },

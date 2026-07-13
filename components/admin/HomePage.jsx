@@ -39,7 +39,7 @@ function HomePageAdmin() {
           photoGallery: {
             ...base.photoGallery,
             ...d.photoGallery,
-            photos: d.photoGallery?.photos?.length ? d.photoGallery.photos : base.photoGallery.photos,
+            photos: d.photoGallery?.photos || [],
           },
           reviews: {
             ...base.reviews,
@@ -133,6 +133,27 @@ function HomePageAdmin() {
             <Form.Control value={gallery.subtitle} onChange={(e) => setGallery({ ...gallery, subtitle: e.target.value })} />
           </Form.Group>
 
+          <div className="border rounded p-3 mb-4 bg-light">
+            <div className="fw-semibold mb-1">Bulk upload photos</div>
+            <p className="text-muted small mb-3">Select multiple images at once. They are added to the gallery below — click Save changes when finished.</p>
+            <ImageUpload
+              multiple
+              onMultipleUpload={(uploaded) => {
+                setGallery({
+                  ...gallery,
+                  photos: [
+                    ...gallery.photos,
+                    ...uploaded.map((item) => ({
+                      name: '',
+                      trip: '',
+                      image: item.url,
+                    })),
+                  ],
+                })
+              }}
+            />
+          </div>
+
           <div className="d-flex justify-content-between mb-2">
             <Form.Label className="mb-0 fw-semibold">Gallery photos</Form.Label>
             <Button
@@ -144,6 +165,12 @@ function HomePageAdmin() {
               + Add photo
             </Button>
           </div>
+
+          {gallery.photos.length === 0 ? (
+            <p className="text-muted small mb-3">
+              No gallery photos yet. Use bulk upload above or add photos one at a time.
+            </p>
+          ) : null}
 
           {gallery.photos.map((photo, i) => (
             <div className="border rounded p-3 mb-3" key={i}>
