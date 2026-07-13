@@ -8,6 +8,6 @@ export async function POST(req) {
   }
 
   const response = NextResponse.json({ success: true }, { status: 200 })
-  response.cookies.set(clearAuthCookieOptions())
+  response.cookies.set(clearAuthCookieOptions(req))
   return response
 }

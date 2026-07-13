@@ -72,7 +72,7 @@ export async function PUT(req) {
 
   if (status === 200 && payload?.data?.email) {
     const token = await createToken(payload.data.email)
-    response.cookies.set(authCookieOptions(token))
+    response.cookies.set(authCookieOptions(token, req))
   }
 
   return response

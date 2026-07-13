@@ -16,7 +16,10 @@ import {
 
 export async function POST(req) {
   if (!isAllowedOrigin(req)) {
-    return NextResponse.json({ success: false, message: 'Forbidden' }, { status: 403 })
+    return NextResponse.json(
+      { success: false, message: 'Login blocked. Use HTTPS and open the site from its real domain.' },
+      { status: 403 }
+    )
   }
 
   const ip = getClientIp(req)
@@ -73,6 +76,6 @@ export async function POST(req) {
     { success: true, data: { email: normalizedEmail } },
     { status: 200 }
   )
-  response.cookies.set(authCookieOptions(token))
+  response.cookies.set(authCookieOptions(token, req))
   return response
 }
